@@ -24,9 +24,6 @@ public class Song {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "duration")
-    private int duration;
-
     @Column(name = "lyrics")
     private String lyrics;
 
@@ -36,8 +33,12 @@ public class Song {
     @Column(name = "coverPhoto")
     private String coverPhoto;
 
+    @Column(name = "sourceName")
+    private String sourceName;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "genre")
-    private String genre;
+    private Genre genre;
 
     @ManyToMany(mappedBy = "songs",fetch = FetchType.EAGER)
     private Set<Playlist> playlists;
