@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class SongInterfaceImpl implements SongInterface {
 
-    public static String SONGS_LOCATION = System.getProperty("user.dir") +"\\src\\main\\resources\\songs\\".replace('\\', File.separatorChar);
+    public static String SONGS_LOCATION = System.getProperty("user.dir") + "\\src\\main\\resources\\songs\\".replace('\\', File.separatorChar);
     private final SongRepository songRepository;
 
     @Autowired
@@ -37,8 +37,8 @@ public class SongInterfaceImpl implements SongInterface {
     @Override
     public void uploadSong(MultipartFile uploadedSong) {
         String songName = uploadedSong.getOriginalFilename();
-        File songFile = new File(SONGS_LOCATION+ songName);
-        log.debug("Song "+ songName);
+        File songFile = new File(SONGS_LOCATION + songName);
+        log.debug("Song " + songName);
         try {
             uploadedSong.transferTo(songFile);
         } catch (IOException e) {
@@ -54,7 +54,7 @@ public class SongInterfaceImpl implements SongInterface {
 
     @Override
     public List<Song> getAllSongsByGenre(String genre) {
-        return songRepository.findAllByGenre(genre);
+        return genre == null ? songRepository.findAll() : songRepository.findAllByGenre(genre);
     }
 
 

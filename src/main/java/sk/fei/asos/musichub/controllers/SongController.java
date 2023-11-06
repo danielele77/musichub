@@ -20,10 +20,15 @@ public class SongController {
 
     private final SongInterfaceImpl songService;
 
-    @GetMapping("/songs")
+    @GetMapping("/all")
     public ResponseEntity<List<Song>> getAllSongs() {
         List<Song> allSongs = songService.getAllSongs();
         return allSongs != null ? ResponseEntity.ok(allSongs) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+    @GetMapping("all/{genre}")
+    public ResponseEntity<List<Song>> getSongsByGenre(@PathVariable String genre){
+        List<Song> songs = songService.getAllSongsByGenre(genre);
+        return songs != null ? ResponseEntity.ok(songs) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 
@@ -34,6 +39,8 @@ public class SongController {
                 .contentType(MediaType.parseMediaType("audio/mpeg"))
                 .body(songResource);
     }
+
+
 
     @PostMapping("/upload")
     public ResponseEntity uploadSong(@RequestParam("songFile") MultipartFile uploadedSong){
