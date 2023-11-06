@@ -27,7 +27,7 @@ public class Song {
     @Column(name = "artist")
     private String artist;
 
-    @Column(name = "coverPhoto", length = 15000)
+    @Column(name = "coverPhoto", length = 40000)
     private String coverPhoto;
 
     @Column(name = "sourceName")
