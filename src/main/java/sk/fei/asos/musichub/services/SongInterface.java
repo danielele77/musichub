@@ -12,4 +12,6 @@ public interface SongInterface {
     void uploadSong(MultipartFile songFile);
 
     List<Song> getAllSongs();
+
+    List<Song> getAllSongsByGenre(String genre);
 }

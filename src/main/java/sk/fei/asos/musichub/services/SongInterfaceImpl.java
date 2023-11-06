@@ -52,5 +52,10 @@ public class SongInterfaceImpl implements SongInterface {
         return songRepository.findAll();
     }
 
+    @Override
+    public List<Song> getAllSongsByGenre(String genre) {
+        return songRepository.findAllByGenre(genre);
+    }
+
 
 }
