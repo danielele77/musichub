@@ -1,7 +1,10 @@
 package sk.fei.asos.musichub.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,11 +29,20 @@ import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+@Configuration
 @EnableWebSecurity
 @Component
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final JwtAthFilter jwtAthFilter;
+
+    @Lazy
+    @Autowired
+    private  JwtAthFilter jwtAthFilter;
+
+    @Lazy
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     private final static List<UserDetails> APPLICATION_USERS = Arrays.asList(
             new User(
                     "musichub@gmail.com",
@@ -44,6 +56,7 @@ public class SecurityConfig {
             )
 
     );
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -60,7 +73,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
@@ -87,6 +100,7 @@ public class SecurityConfig {
                 .findFirst()
                 .orElseThrow(() -> new UsernameNotFoundException("No user was found."));
     }
+
 
 }
 

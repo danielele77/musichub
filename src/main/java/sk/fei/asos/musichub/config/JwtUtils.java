@@ -13,8 +13,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 @Component
-//https://youtu.be/b9O9NI-RJ3o?si=rU1BOjSpFxyWyARr&t=2899
-//https://github.com/koushikkothagal/spring-security-jwt/blob/master/src/main/java/io/javabrains/springsecurityjwt/util/JwtUtil.java
 public class JwtUtils {
 
     private String SECRET_KEY = "secret";
