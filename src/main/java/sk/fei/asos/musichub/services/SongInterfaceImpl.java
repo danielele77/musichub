@@ -42,7 +42,7 @@ public class SongInterfaceImpl implements SongInterface {
         try {
             uploadedSong.transferTo(songFile);
         } catch (IOException e) {
-            System.out.println(e.toString());
+            System.out.println("KOKOT");
 //            throw new RuntimeException(e);
         }
     }

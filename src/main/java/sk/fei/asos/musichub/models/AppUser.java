@@ -1,7 +1,6 @@
 package sk.fei.asos.musichub.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +8,6 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
 @Table(name = "Users")
 public class AppUser {
