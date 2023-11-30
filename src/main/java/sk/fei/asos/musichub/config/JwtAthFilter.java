@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import sk.fei.asos.musichub.services.JwtService;
 
 import java.io.IOException;
 
@@ -23,7 +24,11 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @RequiredArgsConstructor
 public class JwtAthFilter extends OncePerRequestFilter {
 
+    private final JwtService jwtService;
+
     private final UserDetailsService userDetailsService;
+
+
     @Lazy
     @Autowired
     private JwtUtils jwtUtils;

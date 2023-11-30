@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -37,11 +39,15 @@ public class SecurityConfig {
 
     @Lazy
     @Autowired
-    private  JwtAthFilter jwtAthFilter;
+    private final JwtAthFilter jwtAthFilter;
+
+    private final AuthenticationProvider authenticationProvider;
 
     @Lazy
     @Autowired
     private UserDetailsService userDetailsService;
+
+
 
     private final static List<UserDetails> APPLICATION_USERS = Arrays.asList(
             new User(
@@ -54,20 +60,40 @@ public class SecurityConfig {
                     "$2a$12$MnZKESMHhV.h3evEomD1qui8YKis7Qg.0UcRbPBECxoVMkW4It7jq",
                     Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"))
             )
-
     );
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((requests) -> requests.anyRequest().authenticated())
-                .addFilterBefore(jwtAthFilter, UsernamePasswordAuthenticationFilter.class)
-                .authenticationProvider(authenticationProvider())
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic(withDefaults())
-                .formLogin(withDefaults());
+        http
+                .csrf(Customizer.withDefaults())
+                .authorizeHttpRequests(authorize -> authorize
+                        .anyRequest().authenticated()
+                )
+                .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults());
         return http.build();
 
+
+
+    }
+////        http.securityMatcher("/api/**")
+////                .csrf(csrf->csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2/**")))
+////                .headers()
+//        http
+//                .csrf().disable()
+//                .authorizeRequests()
+//                .anyRequest().authenticated()
+//                .and()
+//                .httpBasic();
+//        return http.build();
+//        http.authorizeHttpRequests((requests) -> requests.anyRequest().authenticated())
+//                .authenticationProvider(authenticationProvider())
+//                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .addFilterBefore(jwtAthFilter, UsernamePasswordAuthenticationFilter.class)
+//                .httpBasic(withDefaults())
+//                .formLogin(withDefaults());
+//        return http.build();
     }
 
     @Bean
@@ -101,6 +127,25 @@ public class SecurityConfig {
                 .orElseThrow(() -> new UsernameNotFoundException("No user was found."));
     }
 
+
+    @Bean
+    public SecurtyFilterChain securtyFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf()
+                .disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/v1/auth/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAthFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+//    }
 
 }
 
