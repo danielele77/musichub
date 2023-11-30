@@ -31,6 +31,12 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
@@ -70,13 +76,27 @@
 
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>local</id>
+			<properties>
+				<spring.profiles.active>local</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>docker</id>
+			<properties>
+				<spring.profiles.active>docker</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<finalName>ROOT</finalName>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -86,6 +106,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>ROOT</finalName>
 	</build>
 
 </project>
