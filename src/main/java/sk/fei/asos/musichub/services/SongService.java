@@ -6,7 +6,7 @@ import sk.fei.asos.musichub.models.Song;
 
 import java.util.List;
 
-public interface SongInterface {
+public interface SongService {
 
     Resource loadSongAsResource(String songName);
     void uploadSong(MultipartFile songFile);

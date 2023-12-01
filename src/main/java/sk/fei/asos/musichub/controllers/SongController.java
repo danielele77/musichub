@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sk.fei.asos.musichub.models.Song;
-import sk.fei.asos.musichub.services.SongInterfaceImpl;
+import sk.fei.asos.musichub.services.SongService;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SongController {
 
-    private final SongInterfaceImpl songService;
+    private SongService songService;
 
     @GetMapping("/all")
     public ResponseEntity<List<Song>> getAllSongs() {
@@ -43,7 +43,7 @@ public class SongController {
 
 
     @PostMapping("/upload")
-    public ResponseEntity uploadSong(@RequestParam("songFile") MultipartFile uploadedSong){
+    public ResponseEntity<String> uploadSong(@RequestParam("songFile") MultipartFile uploadedSong){
         if(uploadedSong == null) {
             return ResponseEntity.badRequest()
                     .body("No song provided");

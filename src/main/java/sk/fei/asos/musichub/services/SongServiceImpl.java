@@ -17,13 +17,13 @@ import java.util.List;
 @Service
 @Transactional
 @Slf4j
-public class SongInterfaceImpl implements SongInterface {
+public class SongServiceImpl implements SongService {
 
     public static String SONGS_LOCATION = System.getProperty("user.dir") + "\\src\\main\\resources\\songs\\".replace('\\', File.separatorChar);
     private final SongRepository songRepository;
 
     @Autowired
-    public SongInterfaceImpl(SongRepository songRepository) {
+    public SongServiceImpl(SongRepository songRepository) {
         this.songRepository = songRepository;
     }
 
