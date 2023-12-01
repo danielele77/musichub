@@ -4,11 +4,17 @@ package sk.fei.asos.musichub.services;
 import sk.fei.asos.musichub.models.AppUser;
 import sk.fei.asos.musichub.models.request.LoginRequest;
 import sk.fei.asos.musichub.models.request.RegisterRequest;
+import sk.fei.asos.musichub.models.request.UpdateProfileRequest;
 
 public interface UserManagementService {
+
     AppUser getUserByUsername(String username);
 
     AppUser getUserByEmail(String email);
+
     boolean loginUser(LoginRequest loginRequest);
-    boolean registerUser(RegisterRequest registerRequest) throws Exception;
+
+    boolean registerUser(RegisterRequest registerRequest);
+
+    boolean updateProfile(UpdateProfileRequest updateProfileRequest);
 }

@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sk.fei.asos.musichub.models.request.LoginRequest;
 import sk.fei.asos.musichub.models.request.RegisterRequest;
+import sk.fei.asos.musichub.models.request.UpdateProfileRequest;
 import sk.fei.asos.musichub.services.UserManagementService;
-
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/user")
@@ -32,7 +31,7 @@ public class UserManagementController {
 //    }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) throws IOException {
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest)  {
         if (userManagementService.loginUser(loginRequest)) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
@@ -42,8 +41,14 @@ public class UserManagementController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest registerRequest) throws Exception {
+    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest registerRequest)  {
         boolean registrationSuccessful = userManagementService.registerUser(registerRequest);
         return registrationSuccessful ? ResponseEntity.ok("User successfully registered") : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<String> updateProfile(@RequestBody UpdateProfileRequest updateProfileRequest){
+        boolean updateProfileSuccessful = userManagementService.updateProfile(updateProfileRequest);
+        return updateProfileSuccessful ? ResponseEntity.ok("User's profile successfully updated") : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }

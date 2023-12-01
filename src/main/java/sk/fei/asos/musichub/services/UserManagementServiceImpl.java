@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 import sk.fei.asos.musichub.models.AppUser;
 import sk.fei.asos.musichub.models.request.LoginRequest;
 import sk.fei.asos.musichub.models.request.RegisterRequest;
+import sk.fei.asos.musichub.models.request.UpdateProfileRequest;
 import sk.fei.asos.musichub.repositories.UserManagementRepository;
 import sk.fei.asos.musichub.utils.PasswordUtil;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +42,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             log.info("User with login {} was returned", appUser.getEmail());
             return appUser;
         } else {
-            log.info("User with login {} does not exist", email);
+            log.info("User with email {} does not exist", email);
             return null;
         }
     }
@@ -51,17 +54,18 @@ public class UserManagementServiceImpl implements UserManagementService {
         AppUser appUserEmail = getUserByEmail(loginRequest.getUsernameEmail());
 
         if (appUserUsername != null) {
-            log.info("Incorrect login credentials");
+            log.info("User not found by username");
             return PasswordUtil.checkPass(loginRequest.getPassword(), appUserUsername.getPassword(),appUserUsername.getSalt());
         } else if (appUserEmail != null) {
-            log.info("Incorrect login credentials");
+            log.info("User not found by email");
             return PasswordUtil.checkPass(loginRequest.getPassword(), appUserEmail.getPassword(),appUserEmail.getSalt());
         }
+        log.info("User not found");
         return false;
     }
 
     @Override
-    public boolean registerUser(RegisterRequest registerRequest) throws Exception {
+    public boolean registerUser(RegisterRequest registerRequest){
         String userName = registerRequest.getUsername();
         String userEmail = registerRequest.getEmail();
 
@@ -90,5 +94,19 @@ public class UserManagementServiceImpl implements UserManagementService {
         userManagementRepository.save(registeredUser);
         log.info("User with userName {} was registered", userName);
         return true;
+    }
+
+    @Override
+    public boolean updateProfile(UpdateProfileRequest updateProfileRequest) {
+        long userid = updateProfileRequest.getUserId();
+        Optional<AppUser> appUserOpt = userManagementRepository.findById(userid);
+        if(appUserOpt.isPresent()){
+            AppUser appUser = appUserOpt.get();
+            appUser.setFullName(updateProfileRequest.getFullName());
+            appUser.setPhoto(updateProfileRequest.getPhoto());
+            userManagementRepository.save(appUser);
+            return true;
+        }
+        return false;
     }
 }
