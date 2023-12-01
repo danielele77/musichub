@@ -52,10 +52,10 @@ public class UserManagementServiceImpl implements UserManagementService {
 
         if (appUserUsername != null) {
             log.info("Incorrect login credentials");
-            return PasswordUtil.checkPass(loginForm.getPassword(), appUserUsername.getPassword());
+            return PasswordUtil.checkPass(loginForm.getPassword(), appUserUsername.getPassword(),appUserUsername.getSalt());
         } else if (appUserEmail != null) {
             log.info("Incorrect login credentials");
-            return PasswordUtil.checkPass(loginForm.getPassword(), appUserEmail.getPassword());
+            return PasswordUtil.checkPass(loginForm.getPassword(), appUserEmail.getPassword(),appUserEmail.getSalt());
         }
         return false;
     }
@@ -78,12 +78,14 @@ public class UserManagementServiceImpl implements UserManagementService {
             return false;
         }
 
-        String hashPassword = PasswordUtil.hashPassword(registerForm.getPassword());
+        String salt = PasswordUtil.genSalt();
+        String hashPassword = PasswordUtil.hashPassword(registerForm.getPassword(),salt);
         AppUser registeredUser = AppUser.builder()
                 .username(userName)
                 .email(userEmail)
                 .fullName(registerForm.getFullName())
                 .password(hashPassword)
+                .salt(salt)
                 .build();
         userManagementRepository.save(registeredUser);
         log.info("User with userName {} was registered", userName);

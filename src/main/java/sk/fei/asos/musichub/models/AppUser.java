@@ -27,6 +27,9 @@ public class AppUser {
     @Column(name = "photo")
     private String photo;
 
+    @Column(name = "salt")
+    private String salt;
+
     @Column(name = "email")
     private String email;
 
