@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import sk.fei.asos.musichub.models.AppUser;
-import sk.fei.asos.musichub.models.LoginForm;
-import sk.fei.asos.musichub.models.RegisterForm;
+import sk.fei.asos.musichub.models.request.LoginRequest;
+import sk.fei.asos.musichub.models.request.RegisterRequest;
 import sk.fei.asos.musichub.repositories.UserManagementRepository;
 import sk.fei.asos.musichub.utils.PasswordUtil;
 
@@ -46,24 +46,24 @@ public class UserManagementServiceImpl implements UserManagementService {
 
 
     @Override
-    public boolean loginUser(LoginForm loginForm) {
-        AppUser appUserUsername = getUserByUsername(loginForm.getUsernameEmail());
-        AppUser appUserEmail = getUserByEmail(loginForm.getUsernameEmail());
+    public boolean loginUser(LoginRequest loginRequest) {
+        AppUser appUserUsername = getUserByUsername(loginRequest.getUsernameEmail());
+        AppUser appUserEmail = getUserByEmail(loginRequest.getUsernameEmail());
 
         if (appUserUsername != null) {
             log.info("Incorrect login credentials");
-            return PasswordUtil.checkPass(loginForm.getPassword(), appUserUsername.getPassword(),appUserUsername.getSalt());
+            return PasswordUtil.checkPass(loginRequest.getPassword(), appUserUsername.getPassword(),appUserUsername.getSalt());
         } else if (appUserEmail != null) {
             log.info("Incorrect login credentials");
-            return PasswordUtil.checkPass(loginForm.getPassword(), appUserEmail.getPassword(),appUserEmail.getSalt());
+            return PasswordUtil.checkPass(loginRequest.getPassword(), appUserEmail.getPassword(),appUserEmail.getSalt());
         }
         return false;
     }
 
     @Override
-    public boolean registerUser(RegisterForm registerForm) throws Exception {
-        String userName = registerForm.getUsername();
-        String userEmail = registerForm.getEmail();
+    public boolean registerUser(RegisterRequest registerRequest) throws Exception {
+        String userName = registerRequest.getUsername();
+        String userEmail = registerRequest.getEmail();
 
         AppUser appUserUsername = getUserByUsername(userName);
         AppUser appUserEmail = getUserByEmail(userEmail);
@@ -79,11 +79,11 @@ public class UserManagementServiceImpl implements UserManagementService {
         }
 
         String salt = PasswordUtil.genSalt();
-        String hashPassword = PasswordUtil.hashPassword(registerForm.getPassword(),salt);
+        String hashPassword = PasswordUtil.hashPassword(registerRequest.getPassword(),salt);
         AppUser registeredUser = AppUser.builder()
                 .username(userName)
                 .email(userEmail)
-                .fullName(registerForm.getFullName())
+                .fullName(registerRequest.getFullName())
                 .password(hashPassword)
                 .salt(salt)
                 .build();

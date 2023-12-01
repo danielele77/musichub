@@ -1,4 +1,4 @@
-package sk.fei.asos.musichub.models;
+package sk.fei.asos.musichub.models.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterForm {
+public class RegisterRequest {
     private String fullName;
     private String username;
     private String email;

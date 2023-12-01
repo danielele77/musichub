@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sk.fei.asos.musichub.models.LoginForm;
-import sk.fei.asos.musichub.models.RegisterForm;
+import sk.fei.asos.musichub.models.request.LoginRequest;
+import sk.fei.asos.musichub.models.request.RegisterRequest;
 import sk.fei.asos.musichub.services.UserManagementService;
 
 import java.io.IOException;
@@ -32,8 +32,8 @@ public class UserManagementController {
 //    }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginForm loginForm) throws IOException {
-        if (userManagementService.loginUser(loginForm)) {
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) throws IOException {
+        if (userManagementService.loginUser(loginRequest)) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity
@@ -42,8 +42,8 @@ public class UserManagementController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<String> registerUser(@RequestBody RegisterForm registerForm) throws Exception {
-        boolean registrationSuccessful = userManagementService.registerUser(registerForm);
+    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest registerRequest) throws Exception {
+        boolean registrationSuccessful = userManagementService.registerUser(registerRequest);
         return registrationSuccessful ? ResponseEntity.ok("User successfully registered") : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }
