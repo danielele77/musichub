@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -32,4 +33,9 @@ public class Playlist {
             inverseJoinColumns = @JoinColumn(name = "song_id"))
     private Set<Song> songs;
 
+    public Playlist(String name, AppUser user) {
+        this.name = name;
+        this.user = user;
+        this.songs = new HashSet<>();
+    }
 }

@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import sk.fei.asos.musichub.exception.NotFoundException;
 import sk.fei.asos.musichub.models.AppUser;
 import sk.fei.asos.musichub.models.request.LoginRequest;
 import sk.fei.asos.musichub.models.request.RegisterRequest;
@@ -109,4 +110,16 @@ public class UserManagementServiceImpl implements UserManagementService {
         }
         return false;
     }
+
+
+    @Override
+    public AppUser getById(long userId) throws NotFoundException {
+        Optional<AppUser> appUser = this.userManagementRepository.findById(userId);
+        if (appUser.isPresent()){
+            return appUser.get();
+        }
+        throw new NotFoundException();
+    }
+
+
 }
