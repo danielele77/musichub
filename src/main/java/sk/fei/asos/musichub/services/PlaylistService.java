@@ -12,11 +12,7 @@ public interface PlaylistService {
     Playlist addSong(long playlistId, long songId) throws NotFoundException, ConflictException;
 
     Playlist getById(long playlistId) throws NotFoundException;
-//    List<Playlist> getAllPlaylistsByUsername(String username);
-//    Playlist createPlaylist(String username, String playlistName);
-//    List<Playlist> deletePlaylist(String username, String playlistName);
-//    Playlist addSongToPlaylist(String username, String playlistName, String songId);
-//    Playlist deleteSongFromPlaylist(String username, String playlistName, String songId);
-//
-//    Playlist getPlaylistById(long playlistId);
+
+    Playlist rename(long playlistId,String name) throws NotFoundException, ConflictException;
+
 }

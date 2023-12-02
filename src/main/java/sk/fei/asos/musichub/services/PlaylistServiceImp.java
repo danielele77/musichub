@@ -60,4 +60,13 @@ public class PlaylistServiceImp implements PlaylistService{
         }
         return playlist;
     }
+
+    @Override
+    public Playlist rename(long playlistId, String name) throws NotFoundException, ConflictException {
+        Playlist playlist = this.getById(playlistId);
+        if (playlist.getName().equals(name))
+            throw new ConflictException();
+        playlist.setName(name);
+        return playlistRepository.save(playlist);
+    }
 }

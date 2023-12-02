@@ -31,6 +31,12 @@ public class PlaylistController {
         return new ResponseEntity<>(playlist, HttpStatus.OK);
     }
 
+    @PostMapping("/{playlistId}/rename")
+    public ResponseEntity<Playlist> renamePlaylist(@PathVariable long playlistId, @RequestParam String name) throws ConflictException, NotFoundException {
+        Playlist playlist = service.rename(playlistId,name);
+        return new ResponseEntity<>(playlist, HttpStatus.OK);
+    }
+
     @GetMapping("/{playlistId}")
     public ResponseEntity<Playlist> infoPlaylist(@PathVariable long playlistId) throws NotFoundException {
         return new ResponseEntity<>(service.getById(playlistId), HttpStatus.OK);
