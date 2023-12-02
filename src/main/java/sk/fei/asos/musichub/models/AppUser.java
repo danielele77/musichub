@@ -3,7 +3,9 @@ package sk.fei.asos.musichub.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -41,11 +43,17 @@ public class AppUser {
 
     @Column(name = "playlistId")
     @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private List<Playlist> playlistId;
+    private Set<Playlist> playlistId;
 
-//    public AppUser(String username, String email, String password){
-//        this.username = username;
-//        this.email = email;
-//        this.password = password;
-//    }
+    public AppUser(long id, String username, String password, String photo, String salt, String email, Boolean isAdmin, String fullName, List<Playlist> playlistId) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.photo = photo;
+        this.salt = salt;
+        this.email = email;
+        this.isAdmin = isAdmin;
+        this.fullName = fullName;
+        this.playlistId = new HashSet<>();
+    }
 }
