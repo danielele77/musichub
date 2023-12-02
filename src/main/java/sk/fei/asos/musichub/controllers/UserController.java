@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import sk.fei.asos.musichub.models.request.LoginRequest;
 import sk.fei.asos.musichub.models.request.RegisterRequest;
 import sk.fei.asos.musichub.models.request.UpdateProfileRequest;
+import sk.fei.asos.musichub.models.responses.AppUserResponse;
 import sk.fei.asos.musichub.services.UserManagementService;
 
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-public class UserManagementController {
+public class UserController {
 
     private final UserManagementService userManagementService;
 
@@ -31,13 +32,9 @@ public class UserManagementController {
 //    }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest)  {
-        if (userManagementService.loginUser(loginRequest)) {
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body("Incorrect user credentials");
+    public ResponseEntity<AppUserResponse> login(@RequestBody LoginRequest loginRequest)  {
+        AppUserResponse appUserResponse = userManagementService.loginUser(loginRequest);
+        return appUserResponse != null ? ResponseEntity.ok(appUserResponse) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PostMapping("/registration")

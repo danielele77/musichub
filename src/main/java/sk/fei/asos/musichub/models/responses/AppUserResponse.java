@@ -1,13 +1,16 @@
 package sk.fei.asos.musichub.models.responses;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 
-@Getter
-@Setter
+
+@Builder
+@Data
 public class AppUserResponse {
 
     private long id;
+
+    private String username;
 
     private String email;
 
@@ -16,6 +19,4 @@ public class AppUserResponse {
     private Boolean isAdmin;
 
     private String photo;
-
-
 }

@@ -6,8 +6,7 @@ import sk.fei.asos.musichub.models.AppUser;
 import sk.fei.asos.musichub.models.request.LoginRequest;
 import sk.fei.asos.musichub.models.request.RegisterRequest;
 import sk.fei.asos.musichub.models.request.UpdateProfileRequest;
-
-import java.util.Optional;
+import sk.fei.asos.musichub.models.responses.AppUserResponse;
 
 public interface UserManagementService {
 
@@ -15,7 +14,7 @@ public interface UserManagementService {
 
     AppUser getUserByEmail(String email);
 
-    boolean loginUser(LoginRequest loginRequest);
+    AppUserResponse loginUser(LoginRequest loginRequest);
 
     boolean registerUser(RegisterRequest registerRequest);
 
