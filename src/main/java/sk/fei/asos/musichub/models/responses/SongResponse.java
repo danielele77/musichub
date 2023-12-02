@@ -1,6 +1,7 @@
 package sk.fei.asos.musichub.models.responses;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import sk.fei.asos.musichub.models.Genre;
 import sk.fei.asos.musichub.models.Playlist;
 import sk.fei.asos.musichub.models.Song;
@@ -9,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Getter
 public class SongResponse {
 
 
