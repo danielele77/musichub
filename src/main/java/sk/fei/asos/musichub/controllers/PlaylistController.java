@@ -10,9 +10,9 @@ import sk.fei.asos.musichub.exception.NotFoundException;
 import sk.fei.asos.musichub.models.Playlist;
 import sk.fei.asos.musichub.models.request.PlaylistRequest;
 import sk.fei.asos.musichub.services.PlaylistService;
-
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/playlist")
 @RequiredArgsConstructor

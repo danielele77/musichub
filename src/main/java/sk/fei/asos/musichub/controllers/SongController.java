@@ -14,6 +14,7 @@ import sk.fei.asos.musichub.services.SongService;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/song")
 @RequiredArgsConstructor
