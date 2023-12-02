@@ -69,4 +69,9 @@ public class PlaylistServiceImp implements PlaylistService{
         playlist.setName(name);
         return playlistRepository.save(playlist);
     }
+
+    @Override
+    public List<Playlist> getUserPlaylists(long userId) throws NotFoundException{
+        return playlistRepository.findPlaylistByUserId(userId);
+    }
 }
