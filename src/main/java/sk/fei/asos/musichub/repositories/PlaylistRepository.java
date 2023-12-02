@@ -1,14 +1,15 @@
 package sk.fei.asos.musichub.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import sk.fei.asos.musichub.models.AppUser;
 import sk.fei.asos.musichub.models.Playlist;
-import sk.fei.asos.musichub.models.Song;
 
 import java.util.List;
 
 public interface PlaylistRepository extends JpaRepository<Playlist,Long> {
-//    List<Playlist> findAllByUser(AppUser appUser);
+
+    List<Playlist> findPlaylistByUserId(Long userId);
+
+
 //
 //    List<Playlist> findAllByUserAndName(AppUser appUser, String playlistName);
 //

@@ -5,12 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sk.fei.asos.musichub.models.responses.PlaylistResponse;
 import sk.fei.asos.musichub.exception.ConflictException;
 import sk.fei.asos.musichub.exception.NotFoundException;
 import sk.fei.asos.musichub.models.Playlist;
 import sk.fei.asos.musichub.models.request.PlaylistRequest;
 import sk.fei.asos.musichub.services.PlaylistService;
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -37,5 +37,9 @@ public class PlaylistController {
         return new ResponseEntity<>(service.getById(playlistId), HttpStatus.OK);
 
     }
-
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Playlist>> getUserPlaylist(@PathVariable long userId) throws NotFoundException {
+        List<Playlist> playlists = service.getUserPlaylists(userId);
+        return new ResponseEntity<>(playlists,HttpStatus.OK);
+    }
 }
