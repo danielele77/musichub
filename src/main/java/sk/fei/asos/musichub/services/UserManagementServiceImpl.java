@@ -91,6 +91,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         String hashPassword = PasswordUtil.hashPassword(registerRequest.getPassword(), salt);
         AppUser registeredUser = AppUser.builder()
                 .username(userName)
+                .isAdmin(false)
                 .email(userEmail)
                 .fullName(registerRequest.getFullName())
                 .password(hashPassword)
