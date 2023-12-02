@@ -12,6 +12,7 @@ import sk.fei.asos.musichub.models.Playlist;
 import sk.fei.asos.musichub.models.request.PlaylistRequest;
 import sk.fei.asos.musichub.services.PlaylistService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/playlist")
 @RequiredArgsConstructor
