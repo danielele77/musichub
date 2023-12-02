@@ -2,6 +2,7 @@ package sk.fei.asos.musichub.models.responses;
 
 import lombok.Builder;
 import lombok.Data;
+import sk.fei.asos.musichub.models.AppUser;
 
 
 @Builder
@@ -19,4 +20,13 @@ public class AppUserResponse {
     private Boolean isAdmin;
 
     private String photo;
+
+    public AppUserResponse(AppUser appUser) {
+        this.id = appUser.getId();
+        this.username = appUser.getUsername();
+        this.email = appUser.getEmail();
+        this.fullName = appUser.getFullName();
+        this.isAdmin = appUser.getIsAdmin();
+        this.photo = appUser.getPhoto();
+    }
 }

@@ -51,31 +51,19 @@ public class UserManagementServiceImpl implements UserManagementService {
 
 
     @Override
-    public AppUserResponse loginUser(LoginRequest loginRequest) {
+    public AppUser loginUser(LoginRequest loginRequest) {
         AppUser appUserUsername = getUserByUsername(loginRequest.getUsernameEmail());
         AppUser appUserEmail = getUserByEmail(loginRequest.getUsernameEmail());
 
         if (appUserUsername != null) {
             log.info("User  found by username");
             if (PasswordUtil.checkPass(loginRequest.getPassword(), appUserUsername.getPassword(), appUserUsername.getSalt())) {
-                return AppUserResponse.builder()
-                        .email(appUserUsername.getEmail())
-                        .fullName(appUserUsername.getFullName())
-                        .isAdmin(appUserUsername.getIsAdmin())
-                        .id(appUserUsername.getId())
-                        .username(appUserUsername.getUsername())
-                        .build();
+                return appUserUsername;
             }
         } else if (appUserEmail != null) {
             log.info("User  found by email");
             if(PasswordUtil.checkPass(loginRequest.getPassword(), appUserEmail.getPassword(), appUserEmail.getSalt())){
-                return AppUserResponse.builder()
-                        .email(appUserEmail.getEmail())
-                        .fullName(appUserEmail.getFullName())
-                        .isAdmin(appUserEmail.getIsAdmin())
-                        .id(appUserEmail.getId())
-                        .username(appUserEmail.getUsername())
-                        .build();
+                return appUserEmail;
             }
         }
         log.info("User not found");

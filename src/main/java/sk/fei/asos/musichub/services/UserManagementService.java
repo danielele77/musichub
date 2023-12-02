@@ -14,7 +14,7 @@ public interface UserManagementService {
 
     AppUser getUserByEmail(String email);
 
-    AppUserResponse loginUser(LoginRequest loginRequest);
+    AppUser loginUser(LoginRequest loginRequest);
 
     boolean registerUser(RegisterRequest registerRequest);
 
