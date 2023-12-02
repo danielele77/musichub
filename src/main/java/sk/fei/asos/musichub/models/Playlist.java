@@ -38,4 +38,9 @@ public class Playlist {
         this.user = user;
         this.songs = new HashSet<>();
     }
+
+    public void addSong(Song song){
+        this.songs.add(song);
+    }
+
 }

@@ -22,4 +22,6 @@ public interface PlaylistRepository extends JpaRepository<Playlist,Long> {
 ////
 ////    Playlist findPlaylistById(long playlistId);
 
+    Playlist findPlaylistById(long playlistId);
+
 }

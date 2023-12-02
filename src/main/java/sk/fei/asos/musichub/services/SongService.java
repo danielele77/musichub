@@ -2,6 +2,7 @@ package sk.fei.asos.musichub.services;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
+import sk.fei.asos.musichub.exception.NotFoundException;
 import sk.fei.asos.musichub.models.Genre;
 import sk.fei.asos.musichub.models.Song;
 
@@ -15,4 +16,6 @@ public interface SongService {
     List<Song> getAllSongs();
 
     List<Song> getAllSongsByGenre(Genre genre);
+
+    Song getSongById(long songId) throws NotFoundException;
 }

@@ -26,14 +26,14 @@ public class PlaylistController {
     }
 
     @PostMapping("/{playlistId}")
-    public ResponseEntity<PlaylistResponse> addSong(@PathVariable String playlistId, @RequestParam long songId) {
+    public ResponseEntity<Playlist> addSong(@PathVariable long playlistId, @RequestParam long songId) throws ConflictException, NotFoundException {
         Playlist playlist = service.addSong(playlistId, songId);
-        return new ResponseEntity<>(new PlaylistResponse(playlist), HttpStatus.OK);
+        return new ResponseEntity<>(playlist, HttpStatus.OK);
     }
 
     @GetMapping("/{playlistId}")
-    public ResponseEntity<PlaylistResponse> infoPlaylist(@PathVariable long playlistId) throws NotFoundException {
-        return new ResponseEntity<>(new PlaylistResponse(service.getById(playlistId)), HttpStatus.OK);
+    public ResponseEntity<Playlist> infoPlaylist(@PathVariable long playlistId) throws NotFoundException {
+        return new ResponseEntity<>(service.getById(playlistId), HttpStatus.OK);
 
     }
 

@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface PlaylistService {
     Playlist createPlaylist(long userId, String playlistName) throws ConflictException, NotFoundException;
 
-    Playlist addSong(String playlistId, long songId);
+    Playlist addSong(long playlistId, long songId) throws NotFoundException, ConflictException;
 
     Playlist getById(long playlistId) throws NotFoundException;
 //    List<Playlist> getAllPlaylistsByUsername(String username);

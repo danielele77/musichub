@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import sk.fei.asos.musichub.exception.ConflictException;
 import sk.fei.asos.musichub.exception.NotFoundException;
 import sk.fei.asos.musichub.models.AppUser;
 import sk.fei.asos.musichub.models.Playlist;
+import sk.fei.asos.musichub.models.Song;
 import sk.fei.asos.musichub.repositories.PlaylistRepository;
 
 import java.util.List;
@@ -24,6 +26,8 @@ public class PlaylistServiceImp implements PlaylistService{
 
     private final UserManagementService userManagementService;
 
+    private final SongService songService;
+
     @Override
     public Playlist createPlaylist(long userId, String playlistName) throws ConflictException, NotFoundException {
         AppUser appUser = userManagementService.getById(userId);
@@ -31,21 +35,29 @@ public class PlaylistServiceImp implements PlaylistService{
         if (!playlists.isEmpty()) {
             throw new ConflictException();
         }
-    return playlistRepository.save(new Playlist(playlistName,appUser));
+
+        return playlistRepository.save(new Playlist(playlistName,appUser));
     }
 
     @Override
-    public Playlist addSong(String playlistId, long songId) {
-        return null;
+    public Playlist addSong(long playlistId, long songId) throws NotFoundException, ConflictException {
+        Playlist playlist = this.getById(playlistId);
+        Song song = songService.getSongById(songId);
+        List<Song> songs = playlist.getSongs().stream().filter(s -> s.equals(song)).toList();
+        if(!songs.isEmpty()){
+            throw new ConflictException();
+        }
+        playlist.addSong(song);
+        return playlistRepository.save(playlist);
     }
 
 
     @Override
     public Playlist getById(long playlistId) throws NotFoundException {
-        Optional<Playlist> playlist = playlistRepository.findById(playlistId);
-        if (playlist.isPresent()){
-            return playlist.get();
+        Playlist playlist = playlistRepository.findPlaylistById(playlistId);
+        if (playlist == null){
+            throw new NotFoundException();
         }
-        throw new NotFoundException();
+        return playlist;
     }
 }
