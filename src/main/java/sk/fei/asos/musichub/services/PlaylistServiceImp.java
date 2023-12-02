@@ -84,6 +84,11 @@ public class PlaylistServiceImp implements PlaylistService{
     }
 
     @Override
+    public void detele(long playlistId) throws NotFoundException {
+        playlistRepository.delete(this.getById(playlistId));
+    }
+
+    @Override
     public List<Playlist> getUserPlaylists(long userId) throws NotFoundException{
         return playlistRepository.findPlaylistByUserId(userId);
     }

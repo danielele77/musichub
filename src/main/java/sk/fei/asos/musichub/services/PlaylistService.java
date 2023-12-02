@@ -18,6 +18,8 @@ public interface PlaylistService {
 
     Playlist removeSong(long playlistId, long songId) throws NotFoundException;
 
+    void detele(long playlistId) throws NotFoundException;
+
 //    List<Playlist> getAllPlaylistsByUsername(String username);
 //    Playlist createPlaylist(String username, String playlistName);
 //    List<Playlist> deletePlaylist(String username, String playlistName);

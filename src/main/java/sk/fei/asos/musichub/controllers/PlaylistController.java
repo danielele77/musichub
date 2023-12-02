@@ -56,5 +56,10 @@ public class PlaylistController {
         return new ResponseEntity<>(playlists.stream().map(PlaylistResponse::new).toList(),HttpStatus.OK);
     }
 
+    @DeleteMapping("/{playlistId}")
+    public ResponseEntity<String> deletePlaylist(@PathVariable long playlistId) throws NotFoundException {
+        service.detele(playlistId);
+        return ResponseEntity.ok("Playlist is deleted");
+    }
 
 }
