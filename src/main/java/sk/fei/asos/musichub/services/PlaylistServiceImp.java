@@ -60,4 +60,9 @@ public class PlaylistServiceImp implements PlaylistService{
         }
         return playlist;
     }
+
+    @Override
+    public List<Playlist> getUserPlaylists(long userId) throws NotFoundException{
+        return playlistRepository.findPlaylistByUserId(userId);
+    }
 }
