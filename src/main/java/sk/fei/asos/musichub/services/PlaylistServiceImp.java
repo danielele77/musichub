@@ -71,6 +71,19 @@ public class PlaylistServiceImp implements PlaylistService{
     }
 
     @Override
+    public Playlist removeSong(long playlistId, long songId) throws NotFoundException {
+        Playlist playlist = this.getById(playlistId);
+        Song song = songService.getSongById(songId);
+        List<Song> songs = playlist.getSongs().stream().filter(s -> s.equals(song)).toList();
+        if(songs.isEmpty()){
+            throw new NotFoundException();
+        }
+        playlist.getSongs().remove(song);
+        return playlistRepository.save(playlist);
+
+    }
+
+    @Override
     public List<Playlist> getUserPlaylists(long userId) throws NotFoundException{
         return playlistRepository.findPlaylistByUserId(userId);
     }

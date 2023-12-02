@@ -39,6 +39,12 @@ public class PlaylistController {
         return new ResponseEntity<>(new PlaylistResponse(playlist), HttpStatus.OK);
     }
 
+    @PostMapping("/{playlistId}/removeSong")
+    public ResponseEntity<PlaylistResponse> removeSong(@PathVariable long playlistId, @RequestParam long songId) throws NotFoundException {
+        Playlist playlist = service.removeSong(playlistId, songId);
+        return new ResponseEntity<>(new PlaylistResponse(playlist), HttpStatus.OK);
+    }
+
     @GetMapping("/{playlistId}")
     public ResponseEntity<PlaylistResponse> infoPlaylist(@PathVariable long playlistId) throws NotFoundException {
         return new ResponseEntity<>(new PlaylistResponse(service.getById(playlistId)), HttpStatus.OK);
@@ -49,4 +55,6 @@ public class PlaylistController {
         List<Playlist> playlists = service.getUserPlaylists(userId);
         return new ResponseEntity<>(playlists.stream().map(PlaylistResponse::new).toList(),HttpStatus.OK);
     }
+
+
 }

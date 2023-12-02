@@ -16,6 +16,8 @@ public interface PlaylistService {
 
     Playlist rename(long playlistId,String name) throws NotFoundException, ConflictException;
 
+    Playlist removeSong(long playlistId, long songId) throws NotFoundException;
+
 //    List<Playlist> getAllPlaylistsByUsername(String username);
 //    Playlist createPlaylist(String username, String playlistName);
 //    List<Playlist> deletePlaylist(String username, String playlistName);
