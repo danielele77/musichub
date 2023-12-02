@@ -6,7 +6,6 @@ import sk.fei.asos.musichub.models.AppUser;
 import sk.fei.asos.musichub.models.request.LoginRequest;
 import sk.fei.asos.musichub.models.request.RegisterRequest;
 import sk.fei.asos.musichub.models.request.UpdateProfileRequest;
-import sk.fei.asos.musichub.models.responses.AppUserResponse;
 
 public interface UserManagementService {
 
@@ -18,7 +17,7 @@ public interface UserManagementService {
 
     boolean registerUser(RegisterRequest registerRequest);
 
-    boolean updateProfile(UpdateProfileRequest updateProfileRequest);
+    AppUser updateProfile(UpdateProfileRequest updateProfileRequest) throws NotFoundException;
 
     AppUser getById(long userId) throws NotFoundException;
 }

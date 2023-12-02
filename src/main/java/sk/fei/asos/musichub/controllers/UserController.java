@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sk.fei.asos.musichub.exception.NotFoundException;
 import sk.fei.asos.musichub.models.AppUser;
 import sk.fei.asos.musichub.models.request.LoginRequest;
 import sk.fei.asos.musichub.models.request.RegisterRequest;
@@ -43,8 +44,8 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<String> updateProfile(@RequestBody UpdateProfileRequest updateProfileRequest){
-        boolean updateProfileSuccessful = userManagementService.updateProfile(updateProfileRequest);
-        return updateProfileSuccessful ? ResponseEntity.ok("User's profile successfully updated") : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    public ResponseEntity<AppUserResponse> updateProfile(@RequestBody UpdateProfileRequest updateProfileRequest) throws NotFoundException {
+        AppUser appUser = userManagementService.updateProfile(updateProfileRequest);
+        return ResponseEntity.ok(new AppUserResponse(appUser));
     }
 }

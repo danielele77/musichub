@@ -1,11 +1,9 @@
 package sk.fei.asos.musichub.models.responses;
 
-import lombok.Builder;
 import lombok.Data;
 import sk.fei.asos.musichub.models.AppUser;
 
 
-@Builder
 @Data
 public class AppUserResponse {
 

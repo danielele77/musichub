@@ -9,7 +9,6 @@ import sk.fei.asos.musichub.models.AppUser;
 import sk.fei.asos.musichub.models.request.LoginRequest;
 import sk.fei.asos.musichub.models.request.RegisterRequest;
 import sk.fei.asos.musichub.models.request.UpdateProfileRequest;
-import sk.fei.asos.musichub.models.responses.AppUserResponse;
 import sk.fei.asos.musichub.repositories.UserManagementRepository;
 import sk.fei.asos.musichub.utils.PasswordUtil;
 
@@ -103,7 +102,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
-    public boolean updateProfile(UpdateProfileRequest updateProfileRequest) {
+    public AppUser updateProfile(UpdateProfileRequest updateProfileRequest) throws NotFoundException {
         long userid = updateProfileRequest.getUserId();
         Optional<AppUser> appUserOpt = userManagementRepository.findById(userid);
         if (appUserOpt.isPresent()) {
@@ -111,9 +110,9 @@ public class UserManagementServiceImpl implements UserManagementService {
             appUser.setFullName(updateProfileRequest.getFullName());
             appUser.setPhoto(updateProfileRequest.getPhoto());
             userManagementRepository.save(appUser);
-            return true;
+            return appUser;
         }
-        return false;
+        throw new NotFoundException();
     }
 
 
