@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,12 +33,12 @@ public class Playlist {
     @JoinTable(name="song2playlist",
             joinColumns = @JoinColumn(name="playlist_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id"))
-    private Set<Song> songs;
+    private List<Song> songs;
 
     public Playlist(String name, AppUser user) {
         this.name = name;
         this.user = user;
-        this.songs = new HashSet<>();
+        this.songs = new ArrayList<>();
     }
 
     public void addSong(Song song){

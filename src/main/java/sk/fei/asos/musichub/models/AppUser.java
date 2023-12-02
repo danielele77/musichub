@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,7 +47,7 @@ public class AppUser {
 
     @Column(name = "playlistId")
     @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private Set<Playlist> playlistId = new HashSet<>();
+    private List<Playlist> playlistId = new ArrayList<>();
 
     public AppUser(long id, String username, String password, String photo, String salt, String email, Boolean isAdmin, String fullName, List<Playlist> playlistId) {
         this.id = id;
@@ -57,6 +58,6 @@ public class AppUser {
         this.email = email;
         this.isAdmin = isAdmin;
         this.fullName = fullName;
-        this.playlistId = new HashSet<>();
+        this.playlistId = new ArrayList<>();
     }
 }

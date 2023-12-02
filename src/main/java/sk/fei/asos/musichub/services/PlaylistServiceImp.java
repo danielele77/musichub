@@ -43,7 +43,7 @@ public class PlaylistServiceImp implements PlaylistService{
     public Playlist addSong(long playlistId, long songId) throws NotFoundException, ConflictException {
         Playlist playlist = this.getById(playlistId);
         Song song = songService.getSongById(songId);
-        List<Song> songs = playlist.getSongs().stream().filter(s -> s.equals(song)).toList();
+        List<Song> songs = playlist.getSongs().stream().filter(s -> s.getId() == songId).toList();
         if(!songs.isEmpty()){
             throw new ConflictException();
         }

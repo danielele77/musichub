@@ -7,6 +7,7 @@ import sk.fei.asos.musichub.models.Playlist;
 import sk.fei.asos.musichub.models.Song;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,7 +37,7 @@ public class SongResponse {
     private Genre genre;
 
 
-    private Set<PlaylistResponse> playlists;
+    private List<PlaylistResponse> playlists;
 
     public SongResponse(Song song) {
         this.id = song.getId();
@@ -45,6 +46,6 @@ public class SongResponse {
         this.artist = song.getArtist();
         this.coverPhoto = song.getCoverPhoto();
         this.genre = song.getGenre();
-        this.playlists = song.getPlaylists().stream().map(PlaylistResponse::new).collect(Collectors.toSet());
+        this.playlists = song.getPlaylists().stream().map(PlaylistResponse::new).collect(Collectors.toList());
     }
 }
