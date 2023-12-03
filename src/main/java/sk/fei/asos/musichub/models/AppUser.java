@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
@@ -47,17 +46,9 @@ public class AppUser {
 
     @Column(name = "playlistId")
     @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private List<Playlist> playlistId = new ArrayList<>();
+    private List<Playlist> playlistId;
 
-    public AppUser(long id, String username, String password, String photo, String salt, String email, Boolean isAdmin, String fullName, List<Playlist> playlistId) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.photo = photo;
-        this.salt = salt;
-        this.email = email;
-        this.isAdmin = isAdmin;
-        this.fullName = fullName;
+    public AppUser() {
         this.playlistId = new ArrayList<>();
     }
 }

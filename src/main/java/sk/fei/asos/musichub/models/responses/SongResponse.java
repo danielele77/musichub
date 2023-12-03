@@ -46,6 +46,7 @@ public class SongResponse {
         this.artist = song.getArtist();
         this.coverPhoto = song.getCoverPhoto();
         this.genre = song.getGenre();
+        this.sourceName = song.getSourceName();
         this.playlists = song.getPlaylists().stream().map(PlaylistResponse::new).collect(Collectors.toList());
     }
 }
