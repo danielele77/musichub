@@ -2,14 +2,18 @@ package sk.fei.asos.musichub.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Data
 @Table(name = "Users")
 public class AppUser {
@@ -28,6 +32,9 @@ public class AppUser {
     @Column(name = "photo")
     private String photo;
 
+    @Column(name = "salt")
+    private String salt;
+
     @Column(name = "email")
     private String email;
 
@@ -41,9 +48,7 @@ public class AppUser {
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<Playlist> playlistId;
 
-
-    public AppUser(String login, String password) {
-        this.username = login;
-        this.password = password;
+    public AppUser() {
+        this.playlistId = new ArrayList<>();
     }
 }

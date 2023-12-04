@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,9 +40,9 @@ public class Song {
     private Genre genre;
 
     @ManyToMany(mappedBy = "songs", fetch = FetchType.EAGER)
-    private Set<Playlist> playlists;
+    private List<Playlist> playlists;
 
     public Song() {
-        this.playlists = new HashSet<>();
+        this.playlists = new ArrayList<>();
     }
 }

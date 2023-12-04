@@ -1,31 +1,30 @@
 package sk.fei.asos.musichub.services;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import sk.fei.asos.musichub.exception.NotFoundException;
+import sk.fei.asos.musichub.models.Genre;
 import sk.fei.asos.musichub.models.Song;
 import sk.fei.asos.musichub.repositories.SongRepository;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class SongInterfaceImpl implements SongInterface {
+public class SongServiceImpl implements SongService {
 
     public static String SONGS_LOCATION = System.getProperty("user.dir") + "\\src\\main\\resources\\songs\\".replace('\\', File.separatorChar);
     private final SongRepository songRepository;
-
-    @Autowired
-    public SongInterfaceImpl(SongRepository songRepository) {
-        this.songRepository = songRepository;
-    }
 
     @Override
     public Resource loadSongAsResource(String songResourceName) {
@@ -53,8 +52,17 @@ public class SongInterfaceImpl implements SongInterface {
     }
 
     @Override
-    public List<Song> getAllSongsByGenre(String genre) {
+    public List<Song> getAllSongsByGenre(Genre genre) {
         return genre == null ? songRepository.findAll() : songRepository.findAllByGenre(genre);
+    }
+
+    @Override
+    public Song getSongById(long songId) throws NotFoundException {
+        Optional<Song> song = songRepository.findById(songId);
+        if (song.isPresent()){
+            return song.get();
+        }
+        throw new NotFoundException();
     }
 
 
