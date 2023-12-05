@@ -6,6 +6,6 @@ RUN rm -rf /usr/local/tomcat/webapps/ROOT
 
 ADD target/ROOT.war /usr/local/tomcat/webapps/
 
-EXPOSE 8080
+EXPOSE 8082
 
 CMD ["catalina.sh", "run"]
